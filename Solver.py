@@ -4,15 +4,17 @@ import time
 import random
 pygame.init()
 
-
-def FindStartPosition(maze):
+#Finder positionen(x,y koordinater) af den gule boks i mazen
+def FindPosition(maze):
     for y, list in enumerate(maze):
         for x, color in enumerate(list):
             if color == 4:
                 return [x,y] 
-            
+
+#Tjekker om de fire bokse rundt om den gule boks er en vej(0) eller om det er slutningen(3).
 def FindVeje(maze, position):
     muligeveje = []
+    #Tjekker for veje
     if maze[position[1]-1][position[0]] == 0:
         muligeveje.append([position[0],position[1]-1])
     if maze[position[1]+1][position[0]] == 0:
@@ -22,7 +24,7 @@ def FindVeje(maze, position):
     if maze[position[1]][position[0]-1] == 0:
         muligeveje.append([position[0]-1,position[1]])
 
-
+    #Tjekker for slutningen
     if maze[position[1]-1][position[0]] == 3:
         return "Fundet"
     if maze[position[1]+1][position[0]] == 3:
@@ -34,6 +36,7 @@ def FindVeje(maze, position):
     
     return muligeveje
 
+#Rykker den gule boks og efterlader en rød farvet boks der hvor den lige har været.
 def Move(maze, position, endeposition):
     maze[endeposition[1]][endeposition[0]] = 4
     maze[position[1]][position[0]] = 2
@@ -44,8 +47,8 @@ def MazeSolver(maze, screen):
     knudepunkt = []
     DrawMaze(maze, screen)
     while True:
-        #time.sleep(0.1)
-        position = FindStartPosition(maze)
+        time.sleep(0.1)
+        position = FindPosition(maze)
         Veje = FindVeje(maze,position)
         if Veje == "Fundet":
             break
