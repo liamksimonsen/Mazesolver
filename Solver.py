@@ -21,6 +21,17 @@ def FindVeje(maze, position):
         muligeveje.append([position[0]+1,position[1]])
     if maze[position[1]][position[0]-1] == 0:
         muligeveje.append([position[0]-1,position[1]])
+
+
+    if maze[position[1]-1][position[0]] == 3:
+        return "Fundet"
+    if maze[position[1]+1][position[0]] == 3:
+        return "Fundet"
+    if maze[position[1]][position[0]+1] == 3:
+        return "Fundet"
+    if maze[position[1]][position[0]-1] == 3:
+        return "Fundet"
+    
     return muligeveje
 
 def Move(maze, position, endeposition):
@@ -33,9 +44,11 @@ def MazeSolver(maze, screen):
     knudepunkt = []
     DrawMaze(maze, screen)
     while True:
-        time.sleep(0.2)
+        #time.sleep(0.1)
         position = FindStartPosition(maze)
         Veje = FindVeje(maze,position)
+        if Veje == "Fundet":
+            break
         if len(Veje) == 1:
             maze = Move(maze, position, Veje[0])
             DrawMaze(maze, screen)
@@ -50,7 +63,7 @@ def MazeSolver(maze, screen):
                     knudepunkt.pop()
                 else:
                     break
+            maze = Move(maze, position, knudepunkt[-1])
             maze = Move(maze, knudepunkt[-1], Veje[random.randint(0,len(Veje)-1)])
         pygame.display.flip()
-        print(knudepunkt)
-    print('Stoppet')
+    print('Fundet')

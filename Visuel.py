@@ -2,8 +2,8 @@ import pygame, sys
 import time
 
 #vinduets dimentioner
-width = 500
-height = 500
+width = 1000
+height = 1000
 #farverne på stien og væggen
 color = [[0,0,0],[255,255,255],[255,0,0],[0,255,0],[255,255,0]]
 
