@@ -1,6 +1,6 @@
 import pygame, sys
 import time
-from Visuel import DrawMaze, height, width, color, box_parameter_y, box_parameter_x
+from Visuel import DrawMaze, height, width, color
 
 pygame.init()
 maze = [
@@ -27,6 +27,6 @@ while True:
     screen.fill([0,0,0])
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-    DrawMaze(maze)
+    DrawMaze(maze,screen)
     pygame.display.flip()
 
