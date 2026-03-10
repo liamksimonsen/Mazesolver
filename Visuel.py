@@ -1,7 +1,6 @@
 import pygame, sys
 
 import time
-pygame.init()
 
 #vinduets dimentioner
 width = 500
@@ -32,4 +31,4 @@ def DrawMaze(maze):
 
 
 
-screen = pygame.display.set_mode((width, height))
+
