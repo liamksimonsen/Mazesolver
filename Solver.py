@@ -16,24 +16,48 @@ def FindPosition(maze):
 def FindVeje(maze, position):
     muligeveje = []
     #Tjekker for veje
-    if maze[position[1]-1][position[0]] == 0:
-        muligeveje.append([position[0],position[1]-1])
-    if maze[position[1]+1][position[0]] == 0:
-        muligeveje.append([position[0],position[1]+1])
-    if maze[position[1]][position[0]+1] == 0:
-        muligeveje.append([position[0]+1,position[1]])
-    if maze[position[1]][position[0]-1] == 0:
-        muligeveje.append([position[0]-1,position[1]])
+    try:
+        if maze[position[1]-1][position[0]] == 0:
+            muligeveje.append([position[0],position[1]-1])
+    except:
+        pass
+    try:
+        if maze[position[1]+1][position[0]] == 0:
+            muligeveje.append([position[0],position[1]+1])
+    except:
+        pass
+    try:
+        if maze[position[1]][position[0]+1] == 0:
+            muligeveje.append([position[0]+1,position[1]])
+    except:
+        pass
+    try:
+        if maze[position[1]][position[0]-1] == 0:
+            muligeveje.append([position[0]-1,position[1]])
+    except:
+        pass
 
     #Tjekker for slutningen
-    if maze[position[1]-1][position[0]] == 3:
-        return "Fundet"
-    if maze[position[1]+1][position[0]] == 3:
-        return "Fundet"
-    if maze[position[1]][position[0]+1] == 3:
-        return "Fundet"
-    if maze[position[1]][position[0]-1] == 3:
-        return "Fundet"
+    try:
+        if maze[position[1]-1][position[0]] == 3:
+            return "Fundet"
+    except:
+        pass
+    try:
+        if maze[position[1]+1][position[0]] == 3:
+            return "Fundet"
+    except:
+        pass
+    try:
+        if maze[position[1]][position[0]+1] == 3:
+            return "Fundet"
+    except:
+        pass
+    try:
+        if maze[position[1]][position[0]-1] == 3:
+            return "Fundet"
+    except:
+        pass
     
     return muligeveje
 
@@ -43,20 +67,20 @@ def Move(maze, position, endeposition):
     maze[position[1]][position[0]] = 2
     return maze
 
-def MazeVisuliser(maze,mazestorage):
-    for y, list in enumerate(maze):
-        for x, color in enumerate(list):
-            if color is not mazestorage[y][x]:
-                mazestorage[y][x] = 5
-    return maze
+#def MazeVisuliser(maze,mazestorage):
+    #for y, list in enumerate(maze):
+        #for x, color in enumerate(list):
+            #if color is not mazestorage[y][x]:
+                #maze[y][x] = 5
+   # return maze
 
 
 def MazeSolver(maze, screen):
     knudepunkt = []
-    mazestorage = []
+    #mazestorage = []
     DrawMaze(maze, screen)
     while True:
-        time.sleep(0.1)
+        #time.sleep(0.01)
         position = FindPosition(maze)
         Veje = FindVeje(maze,position)
         if Veje == "Fundet":
@@ -66,7 +90,7 @@ def MazeSolver(maze, screen):
             DrawMaze(maze, screen)
         if len(Veje) > 1:
             knudepunkt.append(position)
-            mazestorage.append(copy.deepcopy(maze))
+            #mazestorage.append(copy.deepcopy(maze))
             maze = Move(maze, position, Veje[random.randint(0,len(Veje)-1)])
             DrawMaze(maze, screen)
         if len(Veje) == 0:
@@ -74,12 +98,12 @@ def MazeSolver(maze, screen):
                 Veje = FindVeje(maze,knudepunkt[-1])
                 if len(Veje) == 0:
                     knudepunkt.pop()
-                    mazestorage.pop()
+                    #mazestorage.pop()
                 else:
                     break
             maze = Move(maze, position, knudepunkt[-1])
             maze = Move(maze, knudepunkt[-1], Veje[random.randint(0,len(Veje)-1)])
-            maze = MazeVisuliser(maze,mazestorage[-1])
+            #maze = MazeVisuliser(maze,mazestorage[-1])
             DrawMaze(maze, screen)
         pygame.display.flip()
     print('Fundet')
