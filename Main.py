@@ -7,7 +7,7 @@ from Generator import etStep
 pygame.init()
 maze = []
 front = []
-front, maze = etStep(maze,front,250,250)
+front, maze = etStep(maze,front,100,100)
 
 screen = pygame.display.set_mode((width, height))
 

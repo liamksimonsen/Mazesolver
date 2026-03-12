@@ -5,7 +5,7 @@ import time
 width = 500
 height = 500
 #farverne på stien og væggen
-color = [[0,0,0],[255,255,255],[255,0,0],[0,255,0],[255,255,0],[0,0,0]]
+color = [[0,0,0],[255,255,255],[255,0,0],[0,255,0],[255,255,0],[0,0,0],[255,0,0]]
 
 #giver hver en box et koordinat(x og y) og farve(0 eller 1)
 def MazeCordsMaker(maze, box_parameter_x, box_parameter_y):
