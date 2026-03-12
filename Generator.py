@@ -9,31 +9,35 @@ def tomt_board(leangde,bredde):
             board[i].append(1)
     return board
 
-def findfront(x, y, board = [],front_lst = []):
-
+def findfront(y,x, board = [],front_lst = []): #skal kunne tjekke om det stadig er en front
+    print("fronter findes...", y, x)
     #find alle naboer og tjekker om de er en væg
     try:
-        if board[y][x+2] == 1:
+        if board[y][x+2] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y][x+2] = 2
-            front_lst.append([y,x+2,1])
+            front_lst.append([y,x+2,y,x+1])
+            #print(y,x+2)
     except:
         pass
-    try:
-        if board[y][x-2] == 1 and x-2 > 0:
+    try: #behøver ikke at være i en try
+        if board[y][x-2] == 1 and x-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y][x-2] = 2
-            front_lst.append([y,x-2,2])
+            front_lst.append([y,x-2,y,x-1])
+            #print(y,x-2)
     except:
         pass
     try:
-        if board[y+2][x] == 1:
+        if board[y+2][x] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y+2][x] = 2
-            front_lst.append([y+2,x,3])
+            front_lst.append([y+2,x,y+1,x])
+            #print(y+2,x)
     except:
         pass
-    try:
-        if board[y-2][x] == 1 and y-2 > 0:
+    try: #behøver ikke at være i en try
+        if board[y-2][x] == 1 and y-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y-2][x] = 2
-            front_lst.append([y-2,x,4])
+            front_lst.append([y-2,x,y-1,x])
+            #print(y-2,x)
     except:
         pass
     
@@ -44,39 +48,49 @@ def bro(front_lst = [], board = []):
     random_tal = random.randint(0,len_front_lst-1)
     random_front = front_lst[random_tal]
 
+    findfront(random_front[0],random_front[1],board,front_lst)
+    findfront(random_front[2],random_front[3],board,front_lst)
+
     #laver en "bro" mellem en front on dens tilsvarende del af mazen
-    if random_front[2] == 1:
-        board[random_front[0]][random_front[1]] = 0
-        board[random_front[0]][random_front[2]-1] = 0
-        findfront(random_front[1]-1,random_front[0],board,front_lst)      
-    elif random_front[2] == 2:
-        board[random_front[0]][random_front[1]] = 0
-        board[random_front[0]][random_front[1]+1] = 0
-        findfront(random_front[1]+1,random_front[0],board,front_lst)
-    elif random_front[2] == 3:
-        board[random_front[0]][random_front[1]] = 0
-        board[random_front[0]-1][random_front[1]] = 0
-        findfront(random_front[1],random_front[0]-1,board,front_lst)
-    elif random_front[2] == 4:
-        board[random_front[0]][random_front[1]] = 0
-        board[random_front[0]][random_front[1]-1] = 0
-        findfront(random_front[1],random_front[0]+1,board,front_lst)
-    findfront(random_front[1],random_front[0],board,front_lst)
+    board[random_front[0]][random_front[1]] = 0
+    board[random_front[2]][random_front[3]] = 0
+
     front_lst.pop(random_tal)
     return front_lst, board
 
-def step(board,front_lst,y,x):
-    findfront(x,y,board, front_lst)
-    bro(front_lst,board)
+def etStep(board,front_lst,strY,strX,y = 5,x = 5):
+    board = tomt_board(strY,strX)
+
+    findfront(y,x,board, front_lst)
+
+    while len(front_lst) > 0:
+        bro(front_lst,board)
+    
+    board[y][x] = 4
+    for i in range(strX):
+        if board[strY-1][i] == 0:
+            board[strY-1][i] = 3
+            break
+
     return front_lst, board
 
 
 fronter = []
-maze = tomt_board(10,10)
+maze = []
 
-print(fronter, '\n', maze)
+fronter, maze = etStep(maze, fronter, 30, 30)
 
-#kør programmet en gang (do while loop)
-fronter, maze = findfront(0,0,maze,fronter)
+print(maze)
 
-print(fronter, '\n', maze)
+"""
+fronter, maze = findfront(10,10,maze,fronter)
+print(maze,'\n', "-------------------------------")
+#fronter, maze = bro(fronter, maze)
+for k in range(1000):
+    print(maze)
+    fronter, maze = bro(fronter, maze)
+    for i in range(len(maze)):
+        print(maze[i])
+    print("---------------------------------")
+print(maze)
+"""
