@@ -68,8 +68,8 @@ def etStep(board,front_lst,strY,strX,y = 5,x = 5):
     
     board[y][x] = 4
     for i in range(strX):
-        if board[strY-1][i] == 0:
-            board[strY-1][i] = 3
+        if board[strY-1][strX-i] == 0:
+            board[strY-1][strX-i] = 3
             break
 
     return front_lst, board
