@@ -83,7 +83,7 @@ def MazeSolver(maze, screen):
     mazestorage = []
     DrawMaze(maze, screen)
     while True:
-        time.sleep(0.1)
+        #time.sleep(0.1)
         position = FindPosition(maze)
         Veje = FindVeje(maze,position)
         if Veje == "Fundet":
@@ -105,8 +105,8 @@ def MazeSolver(maze, screen):
                 else:
                     break
             maze = Move(maze, position, knudepunkt[-1])
-            maze = Move(maze, knudepunkt[-1], Veje[random.randint(0,len(Veje)-1)])
             maze = MazeVisuliser(maze,mazestorage[-1])
+            maze = Move(maze, knudepunkt[-1], Veje[random.randint(0,len(Veje)-1)])
             DrawMaze(maze, screen)
         pygame.display.flip()
     print('Fundet')
