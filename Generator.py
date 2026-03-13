@@ -10,7 +10,7 @@ def tomt_board(leangde,bredde):
     return board
 
 def findfront(y,x, board = [],front_lst = []): #skal kunne tjekke om det stadig er en front
-    print("fronter findes...", y, x)
+    #print("fronter findes...", y, x)
     #find alle naboer og tjekker om de er en væg
     try:
         if board[y][x+2] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
