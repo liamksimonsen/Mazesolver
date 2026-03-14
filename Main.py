@@ -3,11 +3,16 @@ import time
 from Visuel import DrawMaze, height, width, color
 from Solver import MazeSolver
 from Generator import etStep
+from Generator import etStep, findfront, bro,tomt_board, startSlut
 
 pygame.init()
 maze = []
 front = []
-front, maze = etStep(maze,front,100,100)
+front, maze = etStep(maze,front,500,500)
+startX, startY = 5,5
+
+maze = tomt_board(100,100)
+front, maze = findfront(startY,startX,maze,front)
 
 screen = pygame.display.set_mode((width, height))
 
@@ -16,5 +21,12 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
     MazeSolver(maze,screen)
+    
+    if len(front) > 0:
+        front, maze = bro(front, maze)
+        DrawMaze(maze,screen)
+        if len(front) == 0:
+            startSlut(startY,startX,maze)
+    else:
+        MazeSolver(maze,screen)
     pygame.display.flip()
-
