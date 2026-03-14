@@ -10,34 +10,30 @@ def tomt_board(leangde,bredde):
     return board
 
 def findfront(y,x, board = [],front_lst = []): #skal kunne tjekke om det stadig er en front
-    #print("fronter findes...", y, x)
+
     #find alle naboer og tjekker om de er en væg
     try:
         if board[y][x+2] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y][x+2] = 2
             front_lst.append([y,x+2,y,x+1])
-            #print(y,x+2)
     except:
         pass
-    try: #behøver ikke at være i en try
+    try:
         if board[y][x-2] == 1 and x-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y][x-2] = 2
             front_lst.append([y,x-2,y,x-1])
-            #print(y,x-2)
     except:
         pass
     try:
         if board[y+2][x] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y+2][x] = 2
             front_lst.append([y+2,x,y+1,x])
-            #print(y+2,x)
     except:
         pass
-    try: #behøver ikke at være i en try
+    try:
         if board[y-2][x] == 1 and y-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
             board[y-2][x] = 2
             front_lst.append([y-2,x,y-1,x])
-            #print(y-2,x)
     except:
         pass
     
@@ -74,23 +70,16 @@ def etStep(board,front_lst,strY,strX,y = 5,x = 5):
 
     return front_lst, board
 
+def startSlut(y,x,board):
+    board[y][x] = 4
+    for i in range(len(board[1])):
+        if board[len(board)-1][len(board[1])-i-1] == 0:
+            board[len(board)-1][len(board[1])-i-1] = 3
+            break
 
 fronter = []
 maze = []
 
 fronter, maze = etStep(maze, fronter, 30, 30)
 
-print(maze)
 
-"""
-fronter, maze = findfront(10,10,maze,fronter)
-print(maze,'\n', "-------------------------------")
-#fronter, maze = bro(fronter, maze)
-for k in range(1000):
-    print(maze)
-    fronter, maze = bro(fronter, maze)
-    for i in range(len(maze)):
-        print(maze[i])
-    print("---------------------------------")
-print(maze)
-"""
