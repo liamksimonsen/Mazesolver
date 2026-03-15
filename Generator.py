@@ -13,27 +13,25 @@ def findfront(y,x, board = [],front_lst = []): #skal kunne tjekke om det stadig 
 
     #find alle naboer og tjekker om de er en væg
     try:
-        if board[y][x+2] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
-            board[y][x+2] = 2
-            front_lst.append([y,x+2,y,x+1])
-    except:
-        pass
-    try:
-        if board[y][x-2] == 1 and x-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
-            board[y][x-2] = 2
-            front_lst.append([y,x-2,y,x-1])
-    except:
-        pass
-    try:
-        if board[y+2][x] == 1 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
-            board[y+2][x] = 2
-            front_lst.append([y+2,x,y+1,x])
-    except:
-        pass
-    try:
-        if board[y-2][x] == 1 and y-2 > 0 and board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
-            board[y-2][x] = 2
-            front_lst.append([y-2,x,y-1,x])
+        if board[y][x+1] != 2 and board[y][x-1] != 2 and board[y+1][x] != 2 and board[y-1][x] != 2:
+            try:
+                if board[y][x+2] == 1:
+                    board[y][x+2] = 2
+                    front_lst.append([y,x+2,y,x+1])
+            except:
+                pass
+            if board[y][x-2] == 1 and x-2 > 0:
+                board[y][x-2] = 2
+                front_lst.append([y,x-2,y,x-1])
+            try:
+                if board[y+2][x] == 1:
+                    board[y+2][x] = 2
+                    front_lst.append([y+2,x,y+1,x])
+            except:
+                pass
+            if board[y-2][x] == 1 and y-2 > 0:
+                board[y-2][x] = 2
+                front_lst.append([y-2,x,y-1,x])
     except:
         pass
     
