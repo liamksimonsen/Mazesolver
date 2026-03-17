@@ -9,7 +9,8 @@ maze = []
 front = []
 startX, startY = 5,5
 
-maze = tomt_board(100,100)
+maze = tomt_board(101,101)
+maze[startY][startX] = 0
 front, maze = findfront(startY,startX,maze,front)
 
 screen = pygame.display.set_mode((width, height))
