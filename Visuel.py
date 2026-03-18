@@ -1,9 +1,12 @@
 import pygame, sys
 import time
-
+import math
+pygame.init()
 #vinduets dimentioner
+info = pygame.display.Info()
 width = 500
 height = 500
+print(info)
 #farverne på stien og væggen
 #0 = vej, 1 = væg, 2 = sti efter gul boks, 3 = gul boks, 4 = slutning, 5 = gennemsøgt veje, 6 = farve ved søgt knudepunkt
 color = [[0,0,0],[255,255,255],[0,255,0],[0,255,0],[255,255,0],[255,0,0],[255,0,0]]
@@ -20,14 +23,12 @@ def MazeCordsMaker(maze, box_parameter_x, box_parameter_y):
 #Tegner hver en box
 def DrawMaze(maze,screen):
     #målene på en enkelt box(væg eller sti)
-    box_parameter_x = width/len(maze[1])
-    box_parameter_y = height/len(maze)
+    box_parameter_x = round(width/len(maze[1]))
+    box_parameter_y = round(height/len(maze))
     mazecords = MazeCordsMaker(maze, box_parameter_x, box_parameter_y) #Tager den generaret maze og laver den om så den kan tegnes
     for list in mazecords:
         for box_value in list:
             pygame.draw.rect(screen, color[box_value[2]], (box_value[0],box_value[1],box_parameter_x,box_parameter_y))
-
-pygame.init()
 
 def tegnStart():
     sort = (0,0,0)
