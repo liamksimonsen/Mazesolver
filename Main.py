@@ -1,15 +1,18 @@
 import pygame, sys
 import time
-from Visuel import DrawMaze, height, width, color
+from Visuel import DrawMaze, height, width, color, tegnStart
 from Solver import MazeSolver
 from Generator import etStep, findfront, bro,tomt_board, startSlut
 
+
 pygame.init()
+str = tegnStart()
+
 maze = []
 front = []
 startX, startY = 5,5
 
-maze = tomt_board(101,101)
+maze = tomt_board(str,str)
 maze[startY][startX] = 0
 front, maze = findfront(startY,startX,maze,front)
 

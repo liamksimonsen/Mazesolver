@@ -5,7 +5,7 @@ def testGenerator(startStr, slutStr):
     fronter = []
     for i in range(startStr, slutStr, 1):
         try:
-            etStep(maze,fronter,i,i)
+            etStep(maze,fronter,i,i,1,1)
         except:
             print("Der op stod en fejl ved: ", i)
 
