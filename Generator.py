@@ -62,21 +62,21 @@ def bro(front_lst = [], board = []):
     return front_lst, board
 
 #laver hele mazen i et step (bruges hvis mazen er meget stor)
-def etStep(board,front_lst,strY,strX,y = 1,x = 1):
+def etStep(board,front_lst,stoerrelse,y = 1,x = 1):
     #laver et tomt board, sætter start postionen = 0 og finder de første fronter
-    board = tomt_board(strY,strX)
+    board = tomt_board(stoerrelse,stoerrelse)
     board[y][x] = 0
-    findfront(y,x,board, front_lst)
+    front_lst, board = findfront(y,x,board, front_lst)
 
     #køre bro i en while looop til at der ikke er flere
     while len(front_lst) > 0:
-        bro(front_lst,board)
+        front_lst, board = bro(front_lst,board)
     
     #finder start og slut position
     board[y][x] = 4
-    for i in range(strX):
-        if board[strY-1][strX-i-1] == 0:
-            board[strY-1][strX-i-1] = 3
+    for i in range(len(board[1])):
+        if board[len(board)-2][len(board[1])-i-1] == 0:
+            board[len(board)-2][len(board[1])-i-1] = 3
             break
 
     return front_lst, board

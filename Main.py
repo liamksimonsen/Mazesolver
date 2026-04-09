@@ -1,22 +1,24 @@
 import pygame, sys
-import time
-from Visuel import DrawMaze, height, width, color, tegnStart
+from Visuel import DrawMaze, tegnStart, height, width
 from Solver import MazeSolver
 from Generator import etStep, findfront, bro,tomt_board, startSlut
 
 
 pygame.init()
-str = tegnStart()
+screen = pygame.display.set_mode((width, height))
+
+stoerrelse, instant_generer = tegnStart()
 
 maze = []
 front = []
-startX, startY = 5,5
+startX, startY = 1,1
 
-maze = tomt_board(str,str)
-maze[startY][startX] = 0
-front, maze = findfront(startY,startX,maze,front)
-
-screen = pygame.display.set_mode((width, height))
+if instant_generer:
+    front, maze = etStep(maze,front,stoerrelse,startX,startY)
+else:
+    maze = tomt_board(stoerrelse,stoerrelse)
+    maze[startY][startX] = 0
+    front, maze = findfront(startY,startX,maze,front)
 
 while True:
     screen.fill([0,0,0])

@@ -1,12 +1,11 @@
 import pygame, sys
-import time
-import math
+
+
 pygame.init()
 #vinduets dimentioner
 info = pygame.display.Info()
 width = 500
 height = 500
-print(info)
 #farverne på stien og væggen
 #0 = vej, 1 = væg, 2 = sti efter gul boks, 3 = gul boks, 4 = slutning, 5 = gennemsøgt veje, 6 = farve ved søgt knudepunkt
 color = [[0,0,0],[255,255,255],[0,255,0],[0,255,0],[255,255,0],[255,0,0],[255,0,0]]
@@ -33,26 +32,37 @@ def DrawMaze(maze,screen):
 def tegnStart():
     sort = (0,0,0)
     hvid = (255,255,255)
+    grøn = (0,255,0)
     screen = pygame.display.set_mode((width, height))
 
-    #font til alt tekst
-    font = pygame.font.SysFont('Georgia',40,bold=True)
+    #fonter til tekst
+    font_stor = pygame.font.SysFont('consolas',60,bold=True)
+    font_lille = pygame.font.SysFont('consolas',20)
 
     #start knap
     start_knap = pygame.Rect(100,100,200,100)
-    surf = font.render('Start',True, 'black')
+    surf_start = font_stor.render('Start',True, 'black')
 
     #bruger input
     bruger_input = ""
-    text_box = pygame.Rect(300,300,100,50)
+    text_box = pygame.Rect(100,200,100,70)
     kanSkrive = False
     farve = 0
 
+    #"generer maze med det sammen" knap
+    generer_knap = pygame.Rect(100,350,50,50)
+    surf_generer = font_lille.render('generer Maze med det samme',True, 'white')
+    color_generer = hvid
+    instant_generer = False
+
+
+    #while loop som køre indtil brugerne har trykket på start
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
 
+            #tjekker om bruger har trykket start
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_knap.collidepoint(event.pos):
                     running = False
@@ -67,12 +77,19 @@ def tegnStart():
                     bruger_input = bruger_input[:-1]
                 else:
                     bruger_input += event.unicode
+            
+            #tjekker om bruger gerne ville have mazen generet med det sammen
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if generer_knap.collidepoint(event.pos):
+                    instant_generer = True
+                    color_generer = grøn
+
         
         screen.fill(sort)
         
         #tegn start knap
         pygame.draw.rect(screen,hvid,start_knap)
-        screen.blit(surf,(start_knap.x+5, start_knap.y+5))
+        screen.blit(surf_start,(start_knap.x+5, start_knap.y+20))
 
         if kanSkrive:
             farve = (255,255,255)
@@ -81,12 +98,20 @@ def tegnStart():
 
         #tegn bruger input
         pygame.draw.rect(screen,farve,text_box,4)
-        surf_text = font.render(bruger_input,True,hvid)
+        surf_text = font_stor.render(bruger_input,True,hvid)
         screen.blit(surf_text,(text_box.x+5,text_box.y+5))
         # ændre boks størrelse hvis tekst fylder mere, max finder den største værdi
         text_box.w = max(100,surf_text.get_width()+10)
 
-        
-        pygame.display.flip()
+        #tegn generer knap
+        pygame.draw.rect(screen,color_generer,generer_knap)
+        screen.blit(surf_generer,(generer_knap.x,generer_knap.y-25))
 
-    return int(bruger_input)
+        pygame.display.flip()
+    
+    #sikre a mazen er en ullige størrelse
+    bruger_input = int(bruger_input) 
+    if bruger_input%2 == 0:
+        bruger_input +=1
+    
+    return bruger_input, instant_generer
