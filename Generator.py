@@ -9,7 +9,7 @@ def tomt_board(leangde,bredde):
             board[i].append(1)
     return board
 
-def findfront(y,x, board = [],front_lst = []): #skal kunne tjekke om det stadig er en front
+def findfront(y,x, board = [],front_lst = []):
 
     #find alle naboer og tjekker om de er en væg
     if board[y][x] != 2:
@@ -81,9 +81,11 @@ def etStep(board,front_lst,stoerrelse,y = 1,x = 1):
 
     return front_lst, board
 
+#funktion som finder start of slut punkt i mazen
 def startSlut(y,x,board):
     board[y][x] = 4
     for i in range(len(board[1])):
         if board[len(board)-2][len(board[1])-i-1] == 0:
             board[len(board)-2][len(board[1])-i-1] = 3
             break
+
