@@ -8,7 +8,7 @@ width = 500
 height = 500
 #farverne på stien og væggen
 #0 = vej, 1 = væg, 2 = sti efter gul boks, 3 = gul boks, 4 = slutning, 5 = gennemsøgt veje, 6 = farve ved søgt knudepunkt
-color = [[0,0,0],[255,255,255],[0,255,0],[0,255,0],[255,255,0],[255,0,0],[255,0,0]]
+color = [[255,255,255],[0,0,0],[0,255,0],[0,255,0],[255,255,0],[173,173,173]]
 
 #giver hver en box et koordinat(x og y) og farve(0 eller 1)
 def MazeCordsMaker(maze, box_parameter_x, box_parameter_y):
@@ -44,19 +44,20 @@ def tegnStart():
     surf_start = font_stor.render('Start',True, 'black')
 
     #bruger input
+    surf_brugerinput = font_lille.render('Indsæt størrelsen af mazen',True, 'white')
     bruger_input = ""
-    text_box = pygame.Rect(100,200,100,70)
+    text_box = pygame.Rect(100,230,100,70)
     kanSkrive = False
     farve = 0
 
     #"generer maze med det sammen" knap
     generer_knap = pygame.Rect(100,350,50,50)
-    surf_generer = font_lille.render('generer Maze med det samme',True, 'white')
+    surf_generer = font_lille.render('Generer Maze med det samme',True, 'white')
     color_generer = hvid
     instant_generer = False
 
 
-    #while loop som køre indtil brugerne har trykket på start
+    #while loop som kører indtil brugerne har trykket på start
     running = True
     while running:
         for event in pygame.event.get():
@@ -103,14 +104,23 @@ def tegnStart():
         # ændre boks størrelse hvis tekst fylder mere, max finder den største værdi
         text_box.w = max(100,surf_text.get_width()+10)
 
+        screen.blit(surf_brugerinput,(text_box.x,text_box.y-25))
+
         #tegn generer knap
         pygame.draw.rect(screen,color_generer,generer_knap)
         screen.blit(surf_generer,(generer_knap.x,generer_knap.y-25))
 
+        #tester om brugeren har inputet noget andet end et tal og sletter det
+        try:
+            bruger_input = str(int(float(bruger_input)))
+        except:
+            bruger_input = bruger_input[:-1]
+
         pygame.display.flip()
     
-    #sikre a mazen er en ullige størrelse
-    bruger_input = int(bruger_input) 
+
+    #sikre a mazen er en ullige størrelse 
+    bruger_input = int(float(bruger_input))
     if bruger_input%2 == 0:
         bruger_input +=1
     
