@@ -11,22 +11,19 @@ def tomt_board(leangde,bredde):
 
 def findfront(y,x, board = [],front_lst = []):
 
-    #find alle naboer og tjekker om de er en væg
-    if board[y][x] != 2:
-        if x + 2 < len(board[0]) - 1:
-            if board[y][x+2] == 1:
-                board[y][x+2] = 2
-                front_lst.append([y,x+2])
-        if board[y][x-2] == 1 and x-2 > 0:
-            board[y][x-2] = 2
-            front_lst.append([y,x-2])
-        if y + 2 < len(board) - 1:
-            if board[y+2][x] == 1:
-                board[y+2][x] = 2
-                front_lst.append([y+2,x])
-        if board[y-2][x] == 1 and y-2 > 0:
-            board[y-2][x] = 2
-            front_lst.append([y-2,x])
+    #find alle naboer og tjekker om de er en væg, hvis der er sættes de til at være en front
+    if x + 2 < len(board[0]) - 1 and board[y][x+2] == 1:
+        board[y][x+2] = 2
+        front_lst.append([y,x+2])
+    if board[y][x-2] == 1 and x-2 > 0:
+        board[y][x-2] = 2
+        front_lst.append([y,x-2])
+    if y + 2 < len(board) - 1 and board[y+2][x] == 1:
+        board[y+2][x] = 2
+        front_lst.append([y+2,x])
+    if board[y-2][x] == 1 and y-2 > 0:
+        board[y-2][x] = 2
+        front_lst.append([y-2,x])
     
     return front_lst, board
 
@@ -49,7 +46,7 @@ def bro(front_lst = [], board = []):
     if random_front[1]-2 >= 0 and board[random_front[0]][random_front[1]-2] == 0:
         naboVej.append([random_front[0], random_front[1]-1])
     
-    #finder en en tilfældig nabo
+    #finder en tilfældig nabo
     random_nabo = naboVej[random.randint(0,len(naboVej)-1)]
     
     #laver broen til den filædlige nabo
@@ -59,6 +56,7 @@ def bro(front_lst = [], board = []):
     #finder nye fronter til den tilfældige vaglte front
     findfront(random_front[0],random_front[1],board,front_lst)
     front_lst.pop(random_tal)
+
     return front_lst, board
 
 #laver hele mazen i et step (bruges hvis mazen er meget stor)
@@ -68,24 +66,20 @@ def etStep(board,front_lst,stoerrelse,y = 1,x = 1):
     board[y][x] = 0
     front_lst, board = findfront(y,x,board, front_lst)
 
-    #køre bro i en while looop til at der ikke er flere
+    #køre bro i en while loop til at der ikke er flere front
     while len(front_lst) > 0:
         front_lst, board = bro(front_lst,board)
     
     #finder start og slut position
-    board[y][x] = 4
-    for i in range(len(board[1])):
-        if board[len(board)-2][len(board[1])-i-1] == 0:
-            board[len(board)-2][len(board[1])-i-1] = 3
-            break
+    startSlut(y,x,board)
 
     return front_lst, board
 
 #funktion som finder start of slut punkt i mazen
 def startSlut(y,x,board):
     board[y][x] = 4
+    #går igennem alle elementer i den nederste række og finder den vej felt og laver det om til en slut felt 
     for i in range(len(board[1])):
         if board[len(board)-2][len(board[1])-i-1] == 0:
             board[len(board)-2][len(board[1])-i-1] = 3
             break
-
