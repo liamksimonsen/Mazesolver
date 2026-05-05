@@ -1,5 +1,4 @@
-import pygame, sys
-
+import pygame
 
 pygame.init()
 #vinduets dimentioner
@@ -7,9 +6,21 @@ info = pygame.display.Info()
 width = 500
 height = 500
 #farverne på stien og væggen
-#0 = vej, 1 = væg, 2 = sti efter gul boks, 3 = gul boks, 4 = slutning, 5 = gennemsøgt veje, 6 = farve ved søgt knudepunkt
+#0 = vej, 1 = væg, 2 = sti efter gul boks, 3 = gul boks, 4 = slutning, 5 = gennemsøgt veje
 color = [[255,255,255],[0,0,0],[0,255,0],[0,255,0],[255,255,0],[173,173,173]]
 
+#finder størrelsen af skræmen
+def findStoerrelse(mazestr):
+    #specificere af det er de global variabler som skal ændres
+    global width
+    global height
+    #loop der tjekker hvilken størrelse af skræmen som går op i størrelsen af mazen
+    for i in range(500,700,1):
+        if i/mazestr % 1 == 0:
+            width, height = i, i
+            print(1,width)
+            break
+            
 #giver hver en box et koordinat(x og y) og farve(0 eller 1)
 def MazeCordsMaker(maze, box_parameter_x, box_parameter_y):
     mazecords = []
@@ -22,18 +33,18 @@ def MazeCordsMaker(maze, box_parameter_x, box_parameter_y):
 #Tegner hver en box
 def DrawMaze(maze,screen):
     #målene på en enkelt box(væg eller sti)
-    box_parameter_x = round(width/len(maze[1]))
-    box_parameter_y = round(height/len(maze))
+    box_parameter_x = int(width/len(maze[1]))
+    box_parameter_y = int(height/len(maze))
     mazecords = MazeCordsMaker(maze, box_parameter_x, box_parameter_y) #Tager den generaret maze og laver den om så den kan tegnes
-    for list in mazecords:
-        for box_value in list:
+    for liste in mazecords:
+        for box_value in liste:
             pygame.draw.rect(screen, color[box_value[2]], (box_value[0],box_value[1],box_parameter_x,box_parameter_y))
 
 def tegnStart():
     sort = (0,0,0)
     hvid = (255,255,255)
     grøn = (0,255,0)
-    screen = pygame.display.set_mode((width, height))
+    screen = pygame.display.set_mode((500, 500))
 
     #fonter til tekst
     font_stor = pygame.font.SysFont('consolas',60,bold=True)
@@ -61,7 +72,8 @@ def tegnStart():
     running = True
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: sys.exit()
+            if event.type == pygame.QUIT:
+                running = False
 
             #tjekker om bruger har trykket start
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -119,9 +131,11 @@ def tegnStart():
         pygame.display.flip()
     
 
-    #sikre a mazen er en ullige størrelse 
+    #sikre at mazen er en ullige størrelse 
     bruger_input = int(float(bruger_input))
     if bruger_input%2 == 0:
         bruger_input +=1
+    
+    findStoerrelse(bruger_input)
     
     return bruger_input, instant_generer

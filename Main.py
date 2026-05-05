@@ -1,15 +1,16 @@
-#alle parker som skal importeres bliver importeret
+#alle bibliotekker som skal importeres bliver importeret
 import pygame, sys
-from Visuel import DrawMaze, tegnStart, height, width
+from Visuel import DrawMaze, tegnStart
 from Solver import MazeSolver
 from Generator import etStep, findfront, bro,tomt_board, startSlut
+
+#funktionen tegnstart kaldes som viser startskærmen derefter importeres størrelsen af skærmen
+stoerrelse, instant_generer = tegnStart()
+from Visuel import height, width
 
 #sætter skærmens størrelse og starter pygame
 pygame.init()
 screen = pygame.display.set_mode((width, height))
-
-#funktionen tegnstart kaldes som viser startskærmen 
-stoerrelse, instant_generer = tegnStart()
 
 #varibaler defineres
 maze = []
@@ -26,10 +27,12 @@ else:
     front, maze = findfront(startY,startX,maze,front)
 
 #while loop som køre til at brugerne trykker kryds
-while True:
+running = True
+while running:
     screen.fill([0,0,0])
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+        if event.type == pygame.QUIT:
+            running = False
     
     #hvis mazen ikke er helt generet, genere det næste step ellers kald mazesolver
     if len(front) > 0:
@@ -42,3 +45,6 @@ while True:
         MazeSolver(maze,screen)
         
     pygame.display.flip()
+
+pygame.quit()
+sys.exit()
