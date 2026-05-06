@@ -15,7 +15,7 @@ def findStoerrelse(mazestr):
     global width
     global height
     #loop der tjekker hvilken størrelse af skræmen som går op i størrelsen af mazen
-    for i in range(500,700,1):
+    for i in range(466,700,1):
         if i/mazestr % 1 == 0:
             width, height = i, i
             print(1,width)
