@@ -82,8 +82,13 @@ def MazeSolver(maze, screen):
     knudepunkt = []
     mazestorage = []
     DrawMaze(maze, screen)
-    while True:
+    running = True
+    while running:
         #time.sleep(0.1)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
         position = FindPosition(maze)
         Veje = FindVeje(maze,position)
         if Veje == "Fundet":
