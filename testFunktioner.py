@@ -6,9 +6,9 @@ def testGenerator(startStr, slutStr):
     for i in range(startStr, slutStr, 1):
         try:
             etStep(maze,fronter,i)
-            print(i)
-        except:
-            print("Der op stod en fejl ved: ", i)
+        except Exception as e:
+            print("Der op stod en fejl ved:", i, "med fejlen:", e)
+    print("Færdig med at teste")
 
 
-testGenerator(0,1000)
+testGenerator(1,500)
