@@ -18,7 +18,6 @@ def findStoerrelse(mazestr):
     for i in range(466,700,1):
         if i/mazestr % 1 == 0:
             width, height = i, i
-            print(1,width)
             break
             
 #giver hver en box et koordinat(x og y) og farve(0 eller 1)
@@ -44,7 +43,7 @@ def tegnStart():
     sort = (0,0,0)
     hvid = (255,255,255)
     grøn = (0,255,0)
-    screen = pygame.display.set_mode((500, 500))
+    screen = pygame.display.set_mode((height, width))
 
     #fonter til tekst
     font_stor = pygame.font.SysFont('consolas',60,bold=True)
@@ -52,10 +51,10 @@ def tegnStart():
 
     #start knap
     start_knap = pygame.Rect(100,100,200,100)
-    surf_start = font_stor.render('Start',True, 'black')
+    surf_start = font_stor.render("Start",True, 'black')
 
     #bruger input
-    surf_brugerinput = font_lille.render('Indsæt størrelsen af mazen',True, 'white')
+    surf_brugerinput = font_lille.render("Indsæt størrelsen af mazen",True, 'white')
     bruger_input = ""
     text_box = pygame.Rect(100,230,100,70)
     kanSkrive = False
@@ -63,7 +62,7 @@ def tegnStart():
 
     #"generer maze med det sammen" knap
     generer_knap = pygame.Rect(100,350,50,50)
-    surf_generer = font_lille.render('Generer Maze med det samme',True, 'white')
+    surf_generer = font_lille.render("Generer Maze med det samme",True, 'white')
     color_generer = hvid
     instant_generer = False
 
@@ -79,6 +78,11 @@ def tegnStart():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_knap.collidepoint(event.pos):
                     running = False
+            
+                #tjekker om bruger gerne ville have mazen generet med det sammen
+                if generer_knap.collidepoint(event.pos):
+                    instant_generer = True
+                    color_generer = grøn
 
             #bruger input
                 if text_box.collidepoint(event.pos):
@@ -90,14 +94,7 @@ def tegnStart():
                     bruger_input = bruger_input[:-1]
                 else:
                     bruger_input += event.unicode
-            
-            #tjekker om bruger gerne ville have mazen generet med det sammen
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if generer_knap.collidepoint(event.pos):
-                    instant_generer = True
-                    color_generer = grøn
 
-        
         screen.fill(sort)
         
         #tegn start knap
@@ -124,7 +121,7 @@ def tegnStart():
 
         #tester om brugeren har inputet noget andet end et tal og sletter det
         try:
-            bruger_input = str(int(float(bruger_input)))
+            bruger_input = str(int(bruger_input))
         except:
             bruger_input = bruger_input[:-1]
 
@@ -132,10 +129,10 @@ def tegnStart():
     
 
     #sikre at mazen er en ullige størrelse 
-    bruger_input = int(float(bruger_input))
+    bruger_input = int(bruger_input)
     if bruger_input%2 == 0:
         bruger_input +=1
-    
+
     findStoerrelse(bruger_input)
     
     return bruger_input, instant_generer
