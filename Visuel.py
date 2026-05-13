@@ -61,10 +61,10 @@ def tegnStart():
     farve = 0
 
     #"generer maze med det sammen" knap
-    generer_knap = pygame.Rect(100,350,50,50)
-    surf_generer = font_lille.render("Generer Maze med det samme",True, 'white')
-    color_generer = hvid
-    instant_generer = False
+    generere_knap = pygame.Rect(100,350,50,50)
+    surf_generere = font_lille.render("Generer Maze med det samme",True, 'white')
+    color_generere = hvid
+    instant_generere = False
 
 
     #while loop som kører indtil brugerne har trykket på start
@@ -79,10 +79,10 @@ def tegnStart():
                 if start_knap.collidepoint(event.pos):
                     running = False
             
-                #tjekker om bruger gerne ville have mazen generet med det sammen
-                if generer_knap.collidepoint(event.pos):
-                    instant_generer = True
-                    color_generer = grøn
+                #tjekker om bruger gerne ville have mazen genereret med det sammen
+                if generere_knap.collidepoint(event.pos):
+                    instant_generere = True
+                    color_generere = grøn
 
             #bruger input
                 if text_box.collidepoint(event.pos):
@@ -116,8 +116,8 @@ def tegnStart():
         screen.blit(surf_brugerinput,(text_box.x,text_box.y-25))
 
         #tegn generer knap
-        pygame.draw.rect(screen,color_generer,generer_knap)
-        screen.blit(surf_generer,(generer_knap.x,generer_knap.y-25))
+        pygame.draw.rect(screen,color_generere,generere_knap)
+        screen.blit(surf_generere,(generere_knap.x,generere_knap.y-25))
 
         #tester om brugeren har inputet noget andet end et tal og sletter det
         try:
@@ -135,4 +135,4 @@ def tegnStart():
 
     findStoerrelse(bruger_input)
     
-    return bruger_input, instant_generer
+    return bruger_input, instant_generere
