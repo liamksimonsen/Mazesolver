@@ -3,7 +3,7 @@ from Generator import etStep
 def testGenerator(startStr, slutStr):
     maze = []
     fronter = []
-    for i in range(startStr, slutStr, 1):
+    for i in range(startStr, slutStr+1, 1):
         try:
             etStep(maze,fronter,i)
         except Exception as e:
