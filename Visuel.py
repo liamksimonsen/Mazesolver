@@ -62,7 +62,7 @@ def tegnStart():
 
     #"generer maze med det sammen" knap
     generere_knap = pygame.Rect(100,350,50,50)
-    surf_generere = font_lille.render("Generer Maze med det samme",True, 'white')
+    surf_generere = font_lille.render("Generere Maze med det samme",True, 'white')
     color_generere = hvid
     instant_generere = False
 
