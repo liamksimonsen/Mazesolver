@@ -12,13 +12,13 @@ def tomt_board(leangde,bredde):
 def findfront(y,x, board = [],front_lst = []):
 
     #find alle naboer og tjekker om de er en væg, hvis der er sættes de til at være en front
-    if x + 2 < len(board[0]) - 1 and board[y][x+2] == 1:
+    if board[y][x+2] == 1 and x + 2 < len(board[0]) - 1:
         board[y][x+2] = 2
         front_lst.append([y,x+2])
     if board[y][x-2] == 1 and x-2 > 0:
         board[y][x-2] = 2
         front_lst.append([y,x-2])
-    if y + 2 < len(board) - 1 and board[y+2][x] == 1:
+    if board[y+2][x] == 1 and y + 2 < len(board) - 1:
         board[y+2][x] = 2
         front_lst.append([y+2,x])
     if board[y-2][x] == 1 and y-2 > 0:
