@@ -1,1 +1,1 @@
-Eksamenprojekt programing c niveau, bestående af en labyrant generator og en labyrant løser. 
+Eksamenprojekt programing c niveau, bestående af en labyrint generator og en labyrint løser. Programmet køres fra main filen.
