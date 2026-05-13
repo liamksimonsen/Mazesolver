@@ -5,7 +5,7 @@ from Solver import MazeSolver
 from Generator import etStep, findfront, bro,tomt_board, startSlut
 
 #funktionen tegnstart kaldes som viser startskærmen derefter importeres størrelsen af skærmen
-stoerrelse, instant_generer = tegnStart()
+stoerrelse, instant_generere = tegnStart()
 from Visuel import height, width
 
 #sætter skærmens størrelse og starter pygame
@@ -18,7 +18,7 @@ front = []
 startX, startY = 1,1
 
 #tjekker om brugerne ville have mazen generet med det sammen
-if instant_generer:
+if instant_generere:
     front, maze = etStep(maze,front,stoerrelse,startX,startY)
 else:
     #hvis brugerne ville have det visulet laves boardet og start postionen samt fronter findes
@@ -38,7 +38,7 @@ while running:
     if len(front) > 0:
         front, maze = bro(front, maze)
         DrawMaze(maze,screen)
-        #finder start og slut punkter når maze er generet
+        #finder start og slut punkter når maze er genereret
         if len(front) == 0:
             startSlut(startY,startX,maze)
     else:
